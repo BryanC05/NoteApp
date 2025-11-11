@@ -1,4 +1,3 @@
-// In DatabaseService.cs
 using NoteApp.Models;
 using SQLite;
 
@@ -35,12 +34,10 @@ namespace NoteApp
             await Init();
             if (note.Id != 0)
             {
-                // This is an existing note, update it
                 return await _db.UpdateAsync(note);
             }
             else
             {
-                // This is a new note, insert it
                 return await _db.InsertAsync(note);
             }
         }
