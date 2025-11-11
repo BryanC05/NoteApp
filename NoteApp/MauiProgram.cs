@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Logging; // <-- THIS LINE IS REQUIRED FOR 'AddDebug'
-// Note: 'using Plugin.Fingerprint;' is now in your GlobalUsings.cs file
+﻿using Microsoft.Extensions.Logging;
 
 namespace NoteApp;
 
@@ -17,11 +16,12 @@ public static class MauiProgram
             });
 
 #if DEBUG
-        builder.Logging.AddDebug(); // This will now work
+        builder.Logging.AddDebug();
 #endif
 
         builder.Services.AddSingleton(typeof(IFingerprint), CrossFingerprint.Current);
 
         return builder.Build();
     }
+
 }
