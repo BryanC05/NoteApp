@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="NoteApp.EditorPage"
+             Title="Edit Note">
+
+    <Grid RowDefinitions="Auto,*,*,Auto" ColumnDefinitions="*"
+          RowSpacing="5" Padding="10">
+
+        <Entry Grid.Row="0"
+               x:Name="TitleEntry"
+               Placeholder="Note Title"
+               FontSize="Header"
+               FontAttributes="Bold" />
+
+        <Border Grid.Row="1" Stroke="Gray" StrokeThickness="1">
+            <Editor x:Name="MarkdownEditor"
+                    Placeholder="Type your note here..."
+                    TextChanged="OnMarkdownEditorTextChanged" />
+        </Border>
+
+        <Border Grid.Row="2" Stroke="Gray" StrokeThickness="1">
+            <WebView x:Name="HtmlPreview" />
+        </Border>
+
+        <HorizontalStackLayout Grid.Row="3" Spacing="10" HorizontalOptions="FillAndExpand">
+            <Button x:Name="SaveButton"
+                    Text="Save"
+                    Clicked="OnSaveButtonClicked"
+                    HorizontalOptions="FillAndExpand" />
+            <Button x:Name="DeleteButton"
+                    Text="Delete"
+                    Clicked="OnDeleteButtonClicked"
+                    BackgroundColor="Red"
+                    TextColor="White"
+                    HorizontalOptions="FillAndExpand" />
+        </HorizontalStackLayout>
+
+    </Grid>
+</ContentPage>
