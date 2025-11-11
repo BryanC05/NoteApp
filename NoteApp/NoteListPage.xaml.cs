@@ -23,8 +23,7 @@ public partial class NoteListPage : ContentPage
         }
         else
         {
-            // Wait for the page to be fully visible, then try to auth
-            await Task.Delay(100); // <-- THIS HELPS PREVENT A CRASH
+            await Task.Delay(100);
             await AuthenticateApp();
         }
     }
@@ -39,19 +38,13 @@ public partial class NoteListPage : ContentPage
         NotesCollectionView.IsVisible = false;
         AddNoteButton.IsVisible = false;
 
-        // --- NEW SAFETY CHECK ---
         var isAvailable = await CrossFingerprint.Current.IsAvailableAsync(true);
         if (!isAvailable)
         {
-            // This means the phone has no scanner OR no fingerprints enrolled
             await DisplayAlert("Not Set Up", "Biometric authentication is not available or not set up on this device.", "OK");
-            
-            // We can just unlock the app here, or close it. 
-            // For now, let's just close it.
             await CloseApp();
             return;
         }
-        // --- END OF NEW CHECK ---
 
         var request = new AuthenticationRequestConfiguration("Unlock NoteApp", "Prove it's you to access your notes.");
         
@@ -59,7 +52,6 @@ public partial class NoteListPage : ContentPage
 
         if (result.Authenticated)
         {
-            // --- SUCCESS ---
             _isUnlocked = true;
             NotesCollectionView.IsVisible = true;
             AddNoteButton.IsVisible = true;
@@ -67,16 +59,14 @@ public partial class NoteListPage : ContentPage
         }
         else
         {
-            // --- FAILURE ---
             await DisplayAlert("Authentication Failed", "Could not verify your identity. The app will close.", "OK");
             await CloseApp();
         }
     }
 
-    // --- NEW, SIMPLER WAY TO CLOSE THE APP ---
     private async Task CloseApp()
     {
-        await Task.Delay(100); // Give the alert time to dismiss
+        await Task.Delay(100);
         Application.Current?.CloseWindow(GetParentWindow());
     }
 
@@ -92,4 +82,5 @@ public partial class NoteListPage : ContentPage
             await Shell.Current.GoToAsync($"EditorPage?id={selectedNote.Id}");
         }
     }
+
 }
